@@ -1,4 +1,4 @@
 {
-  "buildCommand": "bun run build",
+  "buildCommand": "NODE_OPTIONS=--max-old-space-size=6144 next build",
   "installCommand": "bun install"
 }
