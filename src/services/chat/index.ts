@@ -7,6 +7,7 @@ import { ModelProvider } from 'model-bank';
 import { enableAuth } from '@/const/auth';
 import { DEFAULT_AGENT_CONFIG } from '@/const/settings';
 import { isDeprecatedEdition, isDesktop } from '@/const/version';
+import { buildRoleKnowledgeContext } from '@/services/roleContext';
 import { getAgentStoreState } from '@/store/agent';
 import { agentChatConfigSelectors, agentSelectors } from '@/store/agent/selectors';
 import { aiModelSelectors, aiProviderSelectors, getAiInfraStoreState } from '@/store/aiInfra';
@@ -110,6 +111,33 @@ class ChatService {
     const agentStoreState = getAgentStoreState();
     const agentConfig = agentSelectors.currentAgentConfig(agentStoreState);
 
+    let enhancedMessages = messages;
+
+    // Try to inject role knowledge context into the latest user question
+    try {
+      const lastUserEntry = [...messages]
+        .map((m, index) => ({ index, m }))
+        .reverse()
+        .find((x) => x.m.role === 'user');
+
+      if (lastUserEntry) {
+        const userQuestion = lastUserEntry.m.content;
+        if (typeof userQuestion === 'string' && userQuestion.trim()) {
+          const ctx = await buildRoleKnowledgeContext(userQuestion);
+          if (ctx) {
+            const cloned = [...messages];
+            cloned[lastUserEntry.index] = {
+              ...cloned[lastUserEntry.index],
+              content: `${cloned[lastUserEntry.index].content}\n\n${ctx}`,
+            };
+            enhancedMessages = cloned;
+          }
+        }
+      }
+    } catch (e) {
+      console.error('[roleKnowledge] inject failed', e);
+    }
+
     // Apply context engineering with preprocessing configuration
     const oaiMessages = await contextEngineering({
       enableHistoryCount: agentChatConfigSelectors.enableHistoryCount(agentStoreState),
@@ -118,7 +146,7 @@ class ChatService {
       historySummary: options?.historySummary,
       inputTemplate: chatConfig.inputTemplate,
       isWelcomeQuestion: options?.isWelcomeQuestion,
-      messages,
+      messages: enhancedMessages,
       model: payload.model,
       provider: payload.provider!,
       sessionId: options?.trace?.sessionId,

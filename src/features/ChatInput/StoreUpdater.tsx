@@ -27,8 +27,12 @@ const StoreUpdater = memo<StoreUpdaterProps>(
 
     useStoreUpdater('mobile', mobile);
     useStoreUpdater('sendMenu', sendMenu);
-    useStoreUpdater('leftActions', leftActions);
-    useStoreUpdater('rightActions', rightActions);
+
+    const safeLeftActions = leftActions ?? [];
+    const safeRightActions = rightActions ?? [];
+
+    useStoreUpdater('leftActions', safeLeftActions);
+    useStoreUpdater('rightActions', safeRightActions);
 
     useStoreUpdater('sendButtonProps', sendButtonProps);
     useStoreUpdater('onSend', onSend);

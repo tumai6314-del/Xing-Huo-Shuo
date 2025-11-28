@@ -18,6 +18,7 @@ import { StateCreator } from 'zustand/vanilla';
 import { aiChatService } from '@/services/aiChat';
 import { chatService } from '@/services/chat';
 import { messageService } from '@/services/message';
+import { buildRoleKnowledgeContext } from '@/services/roleContext';
 import { getAgentStoreState } from '@/store/agent';
 import { agentChatConfigSelectors, agentSelectors } from '@/store/agent/slices/chat';
 import { aiModelSelectors, aiProviderSelectors, getAiInfraStoreState } from '@/store/aiInfra';
@@ -369,6 +370,26 @@ export const generateAIChatV2: StateCreator<
       }
     }
 
+    // 1.5 Inject role knowledge context (language style + semantic search) into last user message
+    try {
+      const lastIndex = messages.length - 1;
+      const lastMsg = messages[lastIndex];
+
+      if (lastMsg?.role === 'user') {
+        const queryText = ragQuery ?? lastMsg.content;
+        const roleContext = await buildRoleKnowledgeContext(queryText);
+
+        if (roleContext) {
+          messages[lastIndex] = {
+            ...lastMsg,
+            content: `${lastMsg.content}\n\n${roleContext}`.trim(),
+          };
+        }
+      }
+    } catch (error) {
+      console.error('[roleKnowledge] buildRoleKnowledgeContext failed', error);
+    }
+
     // 3. place a search with the search working model if this model is not support tool use
     const aiInfraStoreState = getAiInfraStoreState();
     const isModelSupportToolUse = aiModelSelectors.isModelSupportToolUse(
@@ -490,9 +511,8 @@ export const generateAIChatV2: StateCreator<
       if (isDesktop) {
         try {
           // 动态导入桌面通知服务，避免在非桌面端环境中导入
-          const { desktopNotificationService } = await import(
-            '@/services/electron/desktopNotification'
-          );
+          const { desktopNotificationService } =
+            await import('@/services/electron/desktopNotification');
 
           await desktopNotificationService.showNotification({
             body: content,

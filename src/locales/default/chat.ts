@@ -154,7 +154,7 @@ export default {
       total: '总计消耗',
     },
   },
-  newAgent: '新建助手',
+  newAgent: '新建数字角色',
   pin: '置顶',
   pinOff: '取消置顶',
   rag: {
@@ -194,7 +194,7 @@ export default {
     },
     title: '联网搜索',
   },
-  searchAgentPlaceholder: '搜索助手...',
+  searchAgentPlaceholder: '搜索角色...',
   sendPlaceholder: '输入聊天内容...',
   sessionGroup: {
     config: '分组管理',

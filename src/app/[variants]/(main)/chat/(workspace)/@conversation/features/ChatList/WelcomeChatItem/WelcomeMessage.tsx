@@ -25,11 +25,6 @@ const WelcomeMessage = () => {
   const { isAgentEditable } = useServerConfigStore(featureFlagsSelectors);
   const activeId = useChatStore((s) => s.activeId);
 
-  const agentSystemRoleMsg = t('agentDefaultMessageWithSystemRole', {
-    name: meta.title || t('defaultAgent'),
-    systemRole: meta.description,
-  });
-
   const agentMsg = t(isAgentEditable ? 'agentDefaultMessage' : 'agentDefaultMessageWithoutEdit', {
     name: meta.title || t('defaultAgent'),
     url: qs.stringifyUrl({
@@ -38,10 +33,12 @@ const WelcomeMessage = () => {
     }),
   });
 
+  // 优先使用用户在网站中为角色配置的开场消息；
+  // 如果没有配置，则使用一条与角色设定无关的通用欢迎语。
   const message = useMemo(() => {
     if (openingMessage) return openingMessage;
-    return !!meta.description ? agentSystemRoleMsg : agentMsg;
-  }, [openingMessage, agentSystemRoleMsg, agentMsg, meta.description]);
+    return agentMsg;
+  }, [openingMessage, agentMsg]);
 
   const chatItem = (
     <ChatItem

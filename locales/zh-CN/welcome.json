@@ -2,12 +2,12 @@
   "guide": {
     "agents": {
       "replaceBtn": "换一批",
-      "title": "新增助手推荐："
+      "title": "新增数字角色推荐："
     },
-    "defaultMessage": "我是您的私人智能助理 {{appName}} ，请问现在能帮您做什么？<br />如果需要获得更加专业或定制的助手，可以点击 <plus /> 创建自定义助手",
-    "defaultMessageWithoutCreate": "我是您的私人智能助理 {{appName}} ，请问现在能帮您做什么？",
+    "defaultMessage": "欢迎来到星火说——数字角色驱动的文化传承与智能传播平台，请问您需要哪位数字角色呢？左侧列表为已配置好的数字角色，如需定制数字角色，请点击<plus />创建自定义数字角色或与我们进行联系——xinghuoshuo@163.com！",
+    "defaultMessageWithoutCreate": "欢迎来到星火说——数字角色驱动的文化传承与智能传播平台，请问您需要哪位数字角色呢？左侧列表为已配置好的数字角色，如需定制数字角色，请与我们进行联系——xinghuoshuo@163.com！",
     "qa": {
-      "q01": "LobeHub 是什么？",
+      "q01": "星火说——数字角色驱动的文化传承与智能传播平台 是什么？",
       "q02": "{{appName}} 是什么？",
       "q03": "{{appName}} 是否有社区支持？",
       "q04": "{{appName}} 支持哪些功能？",

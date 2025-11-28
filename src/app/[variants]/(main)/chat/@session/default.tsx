@@ -10,6 +10,7 @@ import SessionHydration from './features/SessionHydration';
 import SkeletonList from './features/SkeletonList';
 
 const SessionListContent = lazy(() => import('./features/SessionListContent'));
+const InitCustomRoles = lazy(() => import('./features/InitCustomRoles'));
 
 const Layout = ServerLayout({ Desktop, Mobile });
 
@@ -21,6 +22,10 @@ const Session = (props: DynamicLayoutProps) => {
           <SessionListContent />
         </Suspense>
       </Layout>
+      {/* 初始化自定义角色到会话列表（仅客户端执行，一次性） */}
+      <Suspense>
+        <InitCustomRoles />
+      </Suspense>
       <SessionHydration />
     </Suspense>
   );

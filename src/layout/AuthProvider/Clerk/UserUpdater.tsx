@@ -1,6 +1,7 @@
 'use client';
 
 import { useClerk, useUser } from '@clerk/nextjs';
+import type { ActiveSessionResource, UserResource } from '@clerk/types';
 import { memo } from 'react';
 import { createStoreUpdater } from 'zustand-utils';
 
@@ -28,8 +29,13 @@ const UserUpdater = memo(() => {
   useStoreUpdater('user', lobeUser);
   useStoreUpdater('isSignedIn', isSignedIn);
 
-  useStoreUpdater('clerkUser', user);
-  useStoreUpdater('clerkSession', session);
+  const clerkUser: UserResource | undefined = user ?? undefined;
+  const clerkSession: ActiveSessionResource | undefined = (session ?? undefined) as
+    | ActiveSessionResource
+    | undefined;
+
+  useStoreUpdater('clerkUser', clerkUser);
+  useStoreUpdater('clerkSession', clerkSession);
   useStoreUpdater('clerkSignIn', openSignIn);
   useStoreUpdater('clerkOpenUserProfile', openUserProfile);
   useStoreUpdater('clerkSignOut', signOut);

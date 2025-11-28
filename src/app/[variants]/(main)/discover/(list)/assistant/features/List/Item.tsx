@@ -10,6 +10,7 @@ import { Flexbox } from 'react-layout-kit';
 import urlJoin from 'url-join';
 
 import PublishedTime from '@/components/PublishedTime';
+import { getSessionStoreState, useSessionStore } from '@/store/session';
 import { DiscoverAssistantItem } from '@/types/discover';
 
 import TokenTag from './TokenTag';
@@ -31,6 +32,20 @@ const useStyles = createStyles(({ css, token }) => {
       margin-block-start: 16px;
       border-block-start: 1px dashed ${token.colorBorder};
       background: ${token.colorBgContainerSecondary};
+    `,
+    localBadge: css`
+      position: absolute;
+      inset-block-start: 8px;
+      inset-inline-start: 8px;
+
+      padding-block: 2px;
+      padding-inline: 6px;
+      border-radius: 6px;
+
+      font-size: 12px;
+      color: ${token.colorInfoText};
+
+      background: ${token.colorInfoBg};
     `,
     secondaryDesc: css`
       font-size: 12px;
@@ -71,7 +86,26 @@ const AssistantItem = memo<DiscoverAssistantItem>(
       <Block
         clickable
         height={'100%'}
-        onClick={() => {
+        onClick={async (e) => {
+          if (identifier?.startsWith('custom-role-')) {
+            e.preventDefault();
+            e.stopPropagation();
+            const { sessions } = getSessionStoreState();
+            const existed = sessions.find((s) => s.meta?.title === title);
+            let id = existed?.id;
+            if (!id) {
+              const create = useSessionStore.getState().createSession;
+              id = await create(
+                {
+                  config: { systemRole: description || '' } as any,
+                  meta: { description, title },
+                },
+                true,
+              );
+            }
+            router.push(`/chat?session=${id}`);
+            return;
+          }
           router.push(link);
         }}
         style={{
@@ -81,6 +115,8 @@ const AssistantItem = memo<DiscoverAssistantItem>(
         variant={'outlined'}
         width={'100%'}
       >
+        {identifier?.startsWith('custom-role-') && <div className={styles.localBadge}>本地</div>}
+
         <Flexbox
           align={'flex-start'}
           gap={16}
@@ -119,7 +155,30 @@ const AssistantItem = memo<DiscoverAssistantItem>(
                   overflow: 'hidden',
                 }}
               >
-                <Link href={link} style={{ color: 'inherit', overflow: 'hidden' }}>
+                <Link
+                  href={link}
+                  onClick={async (e) => {
+                    if (identifier?.startsWith('custom-role-')) {
+                      e.preventDefault();
+                      e.stopPropagation();
+                      const { sessions } = getSessionStoreState();
+                      const existed = sessions.find((s) => s.meta?.title === title);
+                      let id = existed?.id;
+                      if (!id) {
+                        const create = useSessionStore.getState().createSession;
+                        id = await create(
+                          {
+                            config: { systemRole: description || '' } as any,
+                            meta: { description, title },
+                          },
+                          true,
+                        );
+                      }
+                      router.push(`/chat?session=${id}`);
+                    }
+                  }}
+                  style={{ color: 'inherit', overflow: 'hidden' }}
+                >
                   <Text as={'h2'} className={styles.title} ellipsis>
                     {title}
                   </Text>

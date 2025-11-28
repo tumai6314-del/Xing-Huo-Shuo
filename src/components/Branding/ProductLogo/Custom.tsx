@@ -5,7 +5,7 @@ import Image, { ImageProps } from 'next/image';
 import { ReactNode, forwardRef, memo } from 'react';
 import { Flexbox, FlexboxProps } from 'react-layout-kit';
 
-import { BRANDING_LOGO_URL, BRANDING_NAME } from '@/const/branding';
+import { BRANDING_LOGO_URL, BRANDING_NAME, BRANDING_SHORT_NAME } from '@/const/branding';
 
 const useStyles = createStyles(({ css }) => {
   return {
@@ -28,7 +28,7 @@ const CustomTextLogo = memo<FlexboxProps & { size: number }>(({ size, style, ...
       }}
       {...rest}
     >
-      {BRANDING_NAME}
+      {BRANDING_SHORT_NAME || BRANDING_NAME}
     </Flexbox>
   );
 });

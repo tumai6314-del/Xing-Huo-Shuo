@@ -4,9 +4,10 @@ import { ActionIcon, ScrollShadow } from '@lobehub/ui';
 import { EditableMessage } from '@lobehub/ui/chat';
 import { Skeleton } from 'antd';
 import { Edit } from 'lucide-react';
-import { MouseEvent, memo, useState } from 'react';
+import { MouseEvent, memo, useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Flexbox } from 'react-layout-kit';
+import useSWR from 'swr';
 import useMergeState from 'use-merge-value';
 
 import SidebarHeader from '@/components/SidebarHeader';
@@ -53,8 +54,40 @@ const SystemRole = memo(() => {
 
   const isLoading = !init || isAgentConfigLoading;
 
-  const handleOpenWithEdit = (e: MouseEvent) => {
+  const { data: roles } = useSWR('/webapi/roles', (u: string) => fetch(u).then((r) => r.json()));
+
+  const sessionTitle = meta?.title?.trim();
+
+  const backendRole = useMemo(
+    () =>
+      Array.isArray(roles) && sessionTitle
+        ? (roles as any[]).find(
+            (r) => typeof r?.name === 'string' && r.name.trim() === sessionTitle,
+          )
+        : undefined,
+    [roles, sessionTitle],
+  );
+
+  const backendDescription: string | undefined = backendRole?.description
+    ? String(backendRole.description)
+    : undefined;
+
+  const isRoleSession = !!backendRole;
+
+  // keep agent config.systemRole in sync with backend roles.json description
+  useEffect(() => {
+    if (!isRoleSession) return;
+    if (!backendDescription) return;
     if (isLoading) return;
+    if (systemRole === backendDescription) return;
+
+    updateAgentConfig({ systemRole: backendDescription });
+  }, [backendDescription, isLoading, isRoleSession, systemRole, updateAgentConfig]);
+
+  const displaySystemRole = (isRoleSession ? backendDescription : systemRole) ?? '';
+
+  const handleOpenWithEdit = (e: MouseEvent) => {
+    if (isLoading || isRoleSession) return;
 
     e.stopPropagation();
     setEditing(true);
@@ -80,7 +113,9 @@ const SystemRole = memo(() => {
     <Flexbox height={'fit-content'}>
       <SidebarHeader
         actions={
-          <ActionIcon icon={Edit} onClick={handleOpenWithEdit} size={'small'} title={t('edit')} />
+          !isRoleSession ? (
+            <ActionIcon icon={Edit} onClick={handleOpenWithEdit} size={'small'} title={t('edit')} />
+          ) : undefined
         }
         onClick={toggleExpanded}
         style={{ cursor: 'pointer' }}
@@ -91,7 +126,7 @@ const SystemRole = memo(() => {
         height={expanded ? 200 : 0}
         onClick={handleOpen}
         onDoubleClick={(e) => {
-          if (e.altKey) handleOpenWithEdit(e);
+          if (e.altKey && !isRoleSession) handleOpenWithEdit(e);
         }}
         paddingInline={16}
         size={25}
@@ -122,20 +157,34 @@ const SystemRole = memo(() => {
               ),
             }}
             onChange={(e) => {
+              if (isRoleSession) return;
               updateAgentConfig({ systemRole: e });
             }}
             onEditingChange={setEditing}
             onOpenChange={setOpen}
             openModal={open}
             placeholder={`${t('settingAgent.prompt.placeholder', { ns: 'setting' })}...`}
-            styles={{ markdown: { opacity: systemRole ? undefined : 0.5, overflow: 'visible' } }}
-            text={{
-              cancel: t('cancel'),
-              confirm: t('ok'),
-              edit: t('edit'),
-              title: t('settingAgent.prompt.title', { ns: 'setting' }),
+            styles={{
+              markdown: {
+                opacity: displaySystemRole ? undefined : 0.5,
+                overflow: 'visible',
+              },
             }}
-            value={systemRole}
+            text={
+              isRoleSession
+                ? {
+                    cancel: t('cancel'),
+                    confirm: t('ok'),
+                    title: t('settingAgent.prompt.title', { ns: 'setting' }),
+                  }
+                : {
+                    cancel: t('cancel'),
+                    confirm: t('ok'),
+                    edit: t('edit'),
+                    title: t('settingAgent.prompt.title', { ns: 'setting' }),
+                  }
+            }
+            value={displaySystemRole}
           />
         )}
       </ScrollShadow>

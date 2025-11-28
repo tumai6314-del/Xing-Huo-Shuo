@@ -6,10 +6,9 @@ import { createStoreUpdater } from 'zustand-utils';
 import { AgentSettingsInstance, useAgentSettings } from './hooks/useAgentSettings';
 import { State, useStoreApi } from './store';
 
-export interface StoreUpdaterProps
-  extends Partial<
-    Pick<State, 'onMetaChange' | 'onConfigChange' | 'meta' | 'config' | 'id' | 'loading'>
-  > {
+export interface StoreUpdaterProps extends Partial<
+  Pick<State, 'onMetaChange' | 'onConfigChange' | 'meta' | 'config' | 'id' | 'loading'>
+> {
   instanceRef?: ForwardedRef<AgentSettingsInstance> | null;
 }
 
@@ -18,8 +17,11 @@ const StoreUpdater = memo<StoreUpdaterProps>(
     const storeApi = useStoreApi();
     const useStoreUpdater = createStoreUpdater(storeApi);
 
-    useStoreUpdater('meta', meta);
-    useStoreUpdater('config', config);
+    const safeMeta = meta ?? storeApi.getState().meta;
+    const safeConfig = config ?? storeApi.getState().config;
+
+    useStoreUpdater('meta', safeMeta);
+    useStoreUpdater('config', safeConfig);
     useStoreUpdater('onConfigChange', onConfigChange);
     useStoreUpdater('onMetaChange', onMetaChange);
     useStoreUpdater('loading', loading);

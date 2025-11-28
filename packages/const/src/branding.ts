@@ -2,12 +2,13 @@
 // if you want to use it in the commercial usage
 // please contact us for more information: hello@lobehub.com
 
-export const LOBE_CHAT_CLOUD = 'LobeChat Cloud';
+export const LOBE_CHAT_CLOUD = '星火说云服务';
 
-export const BRANDING_NAME = 'LobeChat';
+export const BRANDING_NAME = '星火说——数字角色驱动的文化传承与智能传播平台';
+export const BRANDING_SHORT_NAME = '星火说';
 export const BRANDING_LOGO_URL = '';
 
-export const ORG_NAME = 'LobeHub';
+export const ORG_NAME = '星火说';
 
 export const BRANDING_URL = {
   help: undefined,
