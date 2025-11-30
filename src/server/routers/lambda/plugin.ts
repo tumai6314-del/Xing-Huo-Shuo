@@ -1,8 +1,7 @@
 import { z } from 'zod';
 
 import { PluginModel } from '@/database/models/plugin';
-import { getServerDB } from '@/database/server';
-import { authedProcedure, publicProcedure, router } from '@/libs/trpc/lambda';
+import { authedProcedure, router } from '@/libs/trpc/lambda';
 import { serverDatabase } from '@/libs/trpc/lambda/middleware';
 import { LobeTool } from '@/types/tool';
 
@@ -65,14 +64,8 @@ export const pluginRouter = router({
       return data.identifier;
     }),
 
-  // TODO: 未来这部分方法也需要使用 authedProcedure
-  getPlugins: publicProcedure.query(async ({ ctx }): Promise<LobeTool[]> => {
-    if (!ctx.userId) return [];
-
-    const serverDB = await getServerDB();
-    const pluginModel = new PluginModel(serverDB, ctx.userId);
-
-    return pluginModel.query();
+  getPlugins: pluginProcedure.query(async ({ ctx }): Promise<LobeTool[]> => {
+    return ctx.pluginModel.query();
   }),
 
   removeAllPlugins: pluginProcedure.mutation(async ({ ctx }) => {

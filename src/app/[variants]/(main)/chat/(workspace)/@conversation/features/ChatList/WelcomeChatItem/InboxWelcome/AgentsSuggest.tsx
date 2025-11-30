@@ -119,7 +119,8 @@ const AgentsSuggest = memo<{ mobile?: boolean }>(({ mobile }) => {
               const meta = session?.meta || {};
               const avatar = (meta as any).avatar as string | undefined;
               const backgroundColor = (meta as any).backgroundColor as string | undefined;
-              const desc = (meta as any).description as string | undefined;
+              // Use description from database (session meta) as the card description
+              const desc = String((meta as any).description ?? '').trim() || undefined;
 
               return (
                 <Block

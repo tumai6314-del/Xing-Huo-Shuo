@@ -8,6 +8,7 @@ import { enableAuth } from '@/const/auth';
 import { DEFAULT_AGENT_CONFIG } from '@/const/settings';
 import { isDeprecatedEdition, isDesktop } from '@/const/version';
 import { buildRoleKnowledgeContext } from '@/services/roleContext';
+import { roleKnowledgeService } from '@/services/roleKnowledge';
 import { getAgentStoreState } from '@/store/agent';
 import { agentChatConfigSelectors, agentSelectors } from '@/store/agent/selectors';
 import { aiModelSelectors, aiProviderSelectors, getAiInfraStoreState } from '@/store/aiInfra';
@@ -138,6 +139,18 @@ class ChatService {
       console.error('[roleKnowledge] inject failed', e);
     }
 
+    // Get systemRole: prefer roles.json description over database
+    const sessionState = getSessionStoreState();
+    const roleName = sessionMetaSelectors.currentAgentTitle(sessionState);
+    let systemRole = agentConfig.systemRole;
+
+    if (roleName) {
+      const rolesJsonSystemRole = await roleKnowledgeService.getRoleSystemRole(roleName);
+      if (rolesJsonSystemRole) {
+        systemRole = rolesJsonSystemRole;
+      }
+    }
+
     // Apply context engineering with preprocessing configuration
     const oaiMessages = await contextEngineering({
       enableHistoryCount: agentChatConfigSelectors.enableHistoryCount(agentStoreState),
@@ -150,7 +163,7 @@ class ChatService {
       model: payload.model,
       provider: payload.provider!,
       sessionId: options?.trace?.sessionId,
-      systemRole: agentConfig.systemRole,
+      systemRole,
       tools: pluginIds,
     });
 

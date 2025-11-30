@@ -14,6 +14,10 @@ interface RoleItem {
 
 const FLAG = 'lobechat.customRolesImported.v1';
 
+// 某些后端角色只用于知识库 / 外部调用，不希望在前端自动创建对应会话
+// 例如：用户已经手动创建了同名会话（如“雷锋”），否则每次刷新都会被自动补回
+const DISABLED_ROLE_NAMES = new Set(['雷锋']);
+
 const InitCustomRoles = memo(() => {
   const createSession = useSessionStore((s) => s.createSession);
 
@@ -89,8 +93,14 @@ const InitCustomRoles = memo(() => {
         if (!res.ok) return;
         const roles: RoleItem[] = await res.json();
 
-        // A) 永远先做一次去重清理（幂等）
-        await runCleanup(roles);
+        // 过滤掉不希望自动生成前端会话的角色（例如：雷锋）
+        const activeRoles = roles.filter((role) => {
+          const name = typeof role.name === 'string' ? role.name.trim() : '';
+          return name && !DISABLED_ROLE_NAMES.has(name);
+        });
+
+        // A) 永远先做一次去重清理（幂等）——仅针对需要自动导入的角色
+        await runCleanup(activeRoles);
 
         // B) 始终确保缺失会话被创建（幂等）；仅用 processing 标记避免并发
         const flag = localStorage.getItem(FLAG);
@@ -98,7 +108,7 @@ const InitCustomRoles = memo(() => {
         localStorage.setItem(FLAG, 'processing');
 
         // C) 导入缺失会话（幂等）
-        for (const role of roles) {
+        for (const role of activeRoles) {
           const { sessions } = getSessionStoreState();
           const exists = sessions.some((s) => sessionMetaSelectors.getTitle(s.meta) === role.name);
           if (exists) continue;

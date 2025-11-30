@@ -2,7 +2,7 @@ import { UserJSON } from '@clerk/backend';
 import { v4 as uuidv4 } from 'uuid';
 import { z } from 'zod';
 
-import { enableClerk } from '@/const/auth';
+import { enableClerk, enableNextAuth } from '@/const/auth';
 import { isDesktop } from '@/const/version';
 import { MessageModel } from '@/database/models/message';
 import { SessionModel } from '@/database/models/session';
@@ -52,9 +52,9 @@ export const userRouter = router({
       try {
         state = await ctx.userModel.getUserState(KeyVaultsGateKeeper.getUserKeyVaults);
       } catch (error) {
-        // user not create yet
+        // user not created yet
         if (error instanceof UserNotFoundError) {
-          // if in clerk auth mode
+          // 1) Clerk 模式：从 Clerk 同步用户信息
           if (enableClerk) {
             const user = await ctx.clerkAuth.getCurrentUser();
             if (user) {
@@ -83,10 +83,17 @@ export const userRouter = router({
             }
           }
 
-          // if in desktop mode, make sure desktop user exist
-          else if (isDesktop) {
+          // 2) 桌面模式：确保桌面端用户存在
+          if (isDesktop) {
             await UserModel.makeSureUserExist(ctx.serverDB, ctx.userId);
             pino.info('create desktop user');
+            continue;
+          }
+
+          // 3) Web 无鉴权共享用户模式：为共享 userId 创建一条用户记录
+          if (!enableClerk && !enableNextAuth) {
+            await UserModel.makeSureUserExist(ctx.serverDB, ctx.userId);
+            pino.info(`create shared no-auth user: ${ctx.userId}`);
             continue;
           }
         }

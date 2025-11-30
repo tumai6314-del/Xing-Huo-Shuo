@@ -45,6 +45,7 @@ const isSessionListInit = (s: SessionStore) => s.isSessionsFirstFetchFinished;
 const isSomeSessionActive = (s: SessionStore) => !!s.activeId && isSessionListInit(s);
 
 export const sessionSelectors = {
+  allSessions,
   currentSession,
   currentSessionSafe,
   customSessionGroups,
