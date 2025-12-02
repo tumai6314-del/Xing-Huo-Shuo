@@ -19,7 +19,7 @@ const common = {
     submit: '提交',
   },
   app: {
-    description: '你的 AI 助手协作平台',
+    description: '你的 AI 角色协作平台',
     name: 'LobeHub',
   },
   status: {

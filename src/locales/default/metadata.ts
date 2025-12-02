@@ -10,7 +10,7 @@ export default {
   discover: {
     assistants: {
       description:
-        '内容创作、文案、问答、图像生成、视频生成、语音生成、智能 Agent、自动化工作流，定制你专属的 AI / GPTs / OLLaMA 智能助手',
+        '内容创作、文案、问答、图像生成、视频生成、语音生成、智能 Agent、自动化工作流，定制你专属的 AI / GPTs / OLLaMA 智能角色',
       title: '智能体市场',
     },
     description:
@@ -26,7 +26,7 @@ export default {
     },
     plugins: {
       description:
-        '搜素图表生成、学术、图像生成、视频生成、语音生成、自动化工作流，为你的助手集成丰富的插件能力',
+        '搜素图表生成、学术、图像生成、视频生成、语音生成、自动化工作流，为你的角色集成丰富的插件能力',
       title: '插件市场',
     },
     providers: {

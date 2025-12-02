@@ -4,7 +4,7 @@
   },
   "agentTab": {
     "chat": "聊天偏好",
-    "meta": "助手信息",
+    "meta": "角色信息",
     "modal": "模型设置",
     "opening": "开场设置",
     "plugin": "插件设置",
@@ -22,7 +22,7 @@
     "clear": {
       "action": "立即清除",
       "confirm": "确认清除所有聊天数据？",
-      "desc": "将会清除所有会话数据，包括助手、文件、消息、插件等",
+      "desc": "将会清除所有会话数据，包括角色、文件、消息、插件等",
       "success": "已清除所有会话消息",
       "title": "清除所有会话消息"
     },
@@ -156,31 +156,31 @@
   },
   "settingAgent": {
     "avatar": {
-      "title": "助手头像"
+      "title": "角色头像"
     },
     "backgroundColor": {
       "title": "头像背景色"
     },
     "description": {
-      "desc": "简单介绍你的助手，不作为角色设定",
-      "placeholder": "请输入助手描述",
-      "title": "助手描述"
+      "desc": "简单介绍你的角色，不作为角色设定",
+      "placeholder": "请输入角色描述",
+      "title": "角色描述"
     },
     "name": {
-      "placeholder": "请输入助手名称",
+      "placeholder": "请输入角色名称",
       "title": "名称"
     },
     "prompt": {
       "placeholder": "请输入角色 Prompt 提示词",
       "title": "角色设定"
     },
-    "submit": "更新助手信息",
+    "submit": "更新角色信息",
     "tag": {
-      "desc": "助手标签将在助手市场中展示",
+      "desc": "角色标签将在角色市场中展示",
       "placeholder": "请输入标签",
       "title": "标签"
     },
-    "title": "助手信息"
+    "title": "角色信息"
   },
   "settingAppearance": {
     "animationMode": {
@@ -343,8 +343,8 @@
   },
   "settingOpening": {
     "openingMessage": {
-      "desc": "打开会话时的开场消息，用来介绍助手的功能",
-      "placeholder": "你好，我是自定义助手。你可以立即与我开始对话，也可以前往助手设置完善我的信息。",
+      "desc": "打开会话时的开场消息，用来介绍角色的功能",
+      "placeholder": "你好，我是自定义角色。你可以立即与我开始对话，也可以前往角色设置完善我的信息。",
       "title": "开场消息"
     },
     "openingQuestions": {
@@ -414,7 +414,7 @@
       "title": "语音合成服务"
     },
     "voice": {
-      "desc": "为当前助手挑选一个声音，不同 TTS 服务支持的声源不同",
+      "desc": "为当前角色挑选一个声音，不同 TTS 服务支持的声源不同",
       "preview": "试听声源",
       "title": "语音合成声源"
     }
@@ -424,11 +424,11 @@
       "export": {
         "button": "导出",
         "exportType": {
-          "agent": "导出助手设定",
-          "agentWithMessage": "导出助手和消息",
-          "all": "导出全局设置和所有助手数据",
-          "allAgent": "导出所有助手设定",
-          "allAgentWithMessage": "导出所有助手和消息",
+          "agent": "导出角色设定",
+          "agentWithMessage": "导出角色和消息",
+          "all": "导出全局设置和所有角色数据",
+          "allAgent": "导出所有角色设定",
+          "allAgentWithMessage": "导出所有角色和消息",
           "globalSetting": "导出全局设置"
         },
         "title": "导出数据"
@@ -447,11 +447,11 @@
     "used": "存储用量"
   },
   "submitAgentModal": {
-    "button": "提交助手",
-    "identifier": "identifier 助手标识符",
-    "metaMiss": "请补全助手信息后提交，需要包含名称、描述和标签",
-    "placeholder": "请输入助手的标识符，需要是唯一的，比如 web-development",
-    "tooltips": "分享到助手市场"
+    "button": "提交角色",
+    "identifier": "identifier 角色标识符",
+    "metaMiss": "请补全角色信息后提交，需要包含名称、描述和标签",
+    "placeholder": "请输入角色的标识符，需要是唯一的，比如 web-development",
+    "tooltips": "分享到角色市场"
   },
   "submitFooter": {
     "reset": "重置",
@@ -515,7 +515,7 @@
       "modelDesc": "指定用于 AI 绘画自动命名话题的模型",
       "title": "AI 绘画自动命名话题"
     },
-    "helpInfo": "当创建新助手时，将以默认助手设置作为预设值。",
+    "helpInfo": "当创建新角色时，将以默认角色设置作为预设值。",
     "historyCompress": {
       "label": "会话历史模型",
       "modelDesc": "指定用于压缩会话历史的模型",
@@ -531,7 +531,7 @@
       "modelDesc": "指定用于子话题自动重命名的模型",
       "title": "子话题自动命名"
     },
-    "title": "系统助手",
+    "title": "系统角色",
     "topic": {
       "label": "话题命名模型",
       "modelDesc": "指定用于话题自动重命名的模型",
@@ -545,7 +545,7 @@
   },
   "tab": {
     "about": "关于",
-    "agent": "默认助手",
+    "agent": "默认角色",
     "common": "通用设置",
     "experiment": "实验",
     "hotkey": "快捷键",
@@ -554,7 +554,7 @@
     "proxy": "网络代理",
     "storage": "数据存储",
     "sync": "云端同步",
-    "system-agent": "系统助手",
+    "system-agent": "系统角色",
     "tts": "语音服务"
   },
   "tools": {

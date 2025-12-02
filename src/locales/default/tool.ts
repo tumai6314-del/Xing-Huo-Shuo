@@ -24,7 +24,7 @@ export default {
   search: {
     createNewSearch: '创建新的搜索记录',
     emptyResult: '没有搜索到结果，请修改关键词后重试',
-    genAiMessage: '创建助手消息',
+    genAiMessage: '创建角色消息',
     includedTooltip: '当前搜索结果会进入会话的上下文中',
     keywords: '关键词：',
     scoreTooltip: '相关性分数，该分数越高说明与查询关键词越相关',

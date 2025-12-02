@@ -50,12 +50,12 @@
     "title": "显示主窗口"
   },
   "switchAgent": {
-    "desc": "通过按住 Ctrl 加数字 0~9 切换固定在侧边栏的助手",
-    "title": "快捷切换助手"
+    "desc": "通过按住 Ctrl 加数字 0~9 切换固定在侧边栏的角色",
+    "title": "快捷切换角色"
   },
   "toggleLeftPanel": {
-    "desc": "显示或隐藏左侧助手面板",
-    "title": "显示/隐藏助手面板"
+    "desc": "显示或隐藏左侧角色面板",
+    "title": "显示/隐藏角色面板"
   },
   "toggleRightPanel": {
     "desc": "显示或隐藏右侧话题面板",

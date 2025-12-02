@@ -25,7 +25,7 @@
     "showDetail": "查看详情"
   },
   "autoGenerate": "自动补全",
-  "autoGenerateTooltip": "基于角色设定自动补全助手描述",
+  "autoGenerateTooltip": "基于角色设定自动补全角色描述",
   "autoGenerateTooltipDisabled": "请填写角色设定后使用自动补全功能",
   "back": "返回",
   "batchDelete": "批量删除",
@@ -62,7 +62,7 @@
       "enable": "立即启用",
       "features": {
         "knowledgeBase": {
-          "desc": "沉淀你的个人知识库，并与你的助手轻松开启知识库对话（即将上线）",
+          "desc": "沉淀你的个人知识库，并与你的角色轻松开启知识库对话（即将上线）",
           "title": "支持知识库对话，开启第二大脑"
         },
         "localFirst": {
@@ -141,12 +141,12 @@
   "copySuccess": "复制成功",
   "dataStatistics": {
     "messages": "消息",
-    "sessions": "助手",
+    "sessions": "角色",
     "today": "今日新增",
     "topics": "话题"
   },
-  "defaultAgent": "自定义助手",
-  "defaultSession": "自定义助手",
+  "defaultAgent": "自定义角色",
+  "defaultSession": "自定义角色",
   "delete": "删除",
   "document": "使用文档",
   "download": "下载",
@@ -154,11 +154,11 @@
   "edit": "编辑",
   "export": "导出配置",
   "exportType": {
-    "agent": "导出助手设定",
-    "agentWithMessage": "导出助手和消息",
-    "all": "导出全局设置和所有助手数据",
-    "allAgent": "导出所有助手设定",
-    "allAgentWithMessage": "导出所有助手和消息",
+    "agent": "导出角色设定",
+    "agentWithMessage": "导出角色和消息",
+    "all": "导出全局设置和所有角色数据",
+    "allAgent": "导出所有角色设定",
+    "allAgentWithMessage": "导出所有角色和消息",
     "globalSetting": "导出全局设置"
   },
   "feedback": "反馈与建议",
@@ -211,7 +211,7 @@
       "errors": "导入出错",
       "messages": "消息",
       "sessionGroups": "分组",
-      "sessions": "助手",
+      "sessions": "角色",
       "skips": "重复跳过",
       "topics": "话题",
       "type": "数据类型",

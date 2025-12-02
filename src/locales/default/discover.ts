@@ -1,33 +1,33 @@
 export default {
   assistants: {
-    addAgent: '添加助手',
-    addAgentAndConverse: '添加助手并会话',
+    addAgent: '添加角色',
+    addAgentAndConverse: '添加角色并会话',
     addAgentSuccess: '添加成功',
     conversation: {
       l1: '你好，我是 **{{name}}**，你可以问我任何问题，我会尽力回答你 ~',
       l2: '以下是我的能力介绍: ',
       l3: '让我们开始对话吧！',
     },
-    description: '助手介绍',
+    description: '角色介绍',
     detail: '详情',
     details: {
       capabilities: {
         knowledge: {
-          desc: '助手内置了以下知识库，帮助你回答更多问题。',
+          desc: '角色内置了以下知识库，帮助你回答更多问题。',
           title: '知识库',
         },
         plugin: {
-          desc: '助手内置了以下插件，帮助你完成更多任务。',
+          desc: '角色内置了以下插件，帮助你完成更多任务。',
           title: '内置插件',
         },
-        title: '助手能力',
+        title: '角色能力',
       },
       overview: {
-        example: '助手演示',
+        example: '角色演示',
         title: '概览',
       },
       related: {
-        listTitle: '相关助手',
+        listTitle: '相关角色',
         more: '查看更多',
         title: '相关推荐',
       },
@@ -35,32 +35,32 @@ export default {
         toc: '目录',
       },
       summary: {
-        title: '你可以使用该助手做什么？',
+        title: '你可以使用该角色做什么？',
       },
       systemRole: {
         openingMessage: '开场消息',
         openingQuestions: '开场问题',
-        title: '助手设定',
+        title: '角色设定',
       },
     },
-    list: '助手列表',
+    list: '角色列表',
     more: '更多',
     plugins: '集成插件',
     recentSubmits: '最近更新',
     sorts: {
       createdAt: '最近发布',
-      identifier: '助手 ID',
+      identifier: '角色 ID',
       knowledgeCount: '知识库数量',
       pluginCount: '插件数量',
-      title: '助手名称',
+      title: '角色名称',
       tokenUsage: 'Token 使用量',
     },
     suggestions: '相关推荐',
-    systemRole: '助手设定',
-    tokenUsage: '助手提示词 Token 使用量',
+    systemRole: '角色设定',
+    tokenUsage: '角色提示词 Token 使用量',
     try: '试一下',
-    withKnowledge: '该助手附带知识库',
-    withPlugin: '该助手附带插件',
+    withKnowledge: '该角色附带知识库',
+    withPlugin: '该角色附带插件',
   },
   back: '返回发现',
   category: {
@@ -98,14 +98,14 @@ export default {
   create: '创作',
   createGuide: {
     func1: {
-      desc1: '在会话窗口中通过右上角设置进入你想提交助手的设置页面;',
-      desc2: '点击右上角提交到助手市场按钮。',
+      desc1: '在会话窗口中通过右上角设置进入你想提交角色的设置页面;',
+      desc2: '点击右上角提交到角色市场按钮。',
       tag: '方法一',
       title: '通过 LobeChat 提交',
     },
     func2: {
-      button: '前往 Github 助手仓库',
-      desc: '如果您想将助手添加到索引中，请使用 agent-template.json 或 agent-template-full.json 在 plugins 目录中创建一个条目，编写简短的描述并适当标记，然后创建一个拉取请求。',
+      button: '前往 Github 角色仓库',
+      desc: '如果您想将角色添加到索引中，请使用 agent-template.json 或 agent-template-full.json 在 plugins 目录中创建一个条目，编写简短的描述并适当标记，然后创建一个拉取请求。',
       tag: '方法二',
       title: '通过 Github 提交',
     },
@@ -141,7 +141,7 @@ export default {
     },
   },
   home: {
-    featuredAssistants: '推荐助手',
+    featuredAssistants: '推荐角色',
     featuredModels: '推荐模型',
     featuredProviders: '推荐模型服务商',
     featuredTools: '推荐插件',
@@ -258,7 +258,7 @@ export default {
             cursor:
               '- 导航到 **设置**，然后选择 Cursor 设置\n- 在左侧选择 **MCP**\n- 点击右上角的 **添加新的全局 MCP 服务器**\n- 复制并粘贴服务器配置到现有文件中，然后保存',
             lobeChat:
-              '- 打开 **LobeChat 桌面版** 应用\n- 前往 **设置** - **默认助手**\n- 然后选择 **插件设置** - **自定义插件**\n- 点击 **快速导入 JSON 配置**\n- 复制并粘贴服务器配置到文本框，然后安装',
+              '- 打开 **LobeChat 桌面版** 应用\n- 前往 **设置** - **默认角色**\n- 然后选择 **插件设置** - **自定义插件**\n- 点击 **快速导入 JSON 配置**\n- 复制并粘贴服务器配置到文本框，然后安装',
             openai:
               '- 打开您的 **OpenAI 应用** 或开发环境\n- 在 **Responses API** 中配置 MCP 工具\n- 在 API 请求的 **tools** 数组中添加 MCP 块\n- 设置 **server_url** 为您的 MCP 服务器端点\n- 包含认证所需的头部信息（API 密钥、令牌等）\n- 使用 `allowed_tools` 参数限制暴露的工具\n- 设置 `require_approval` 来控制工具执行审批',
             vscode:
@@ -645,7 +645,7 @@ export default {
     searching: '搜索中...',
   },
   tab: {
-    assistant: '助手',
+    assistant: '角色',
     home: '首页',
     model: '模型',
     plugin: '插件',
